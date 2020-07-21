@@ -45,9 +45,6 @@
     
     id openNotificationHandler = ^(OSNotificationOpenedResult *result) {
         NSLog(@"OSNotificationOpenedResult: %@", result);
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notifiation Opened" message:@"Notification Opened" delegate:self cancelButtonTitle:@"Delete" otherButtonTitles:@"Cancel", nil];
-        [alert show];
     };
 
     id notificationReceiverBlock = ^(OSNotification *notification) {
@@ -67,7 +64,7 @@
                                appId:[AppDelegate getOneSignalAppId]
           handleNotificationReceived:notificationReceiverBlock
             handleNotificationAction:openNotificationHandler
-                            settings:@{kOSSettingsKeyAutoPrompt: @false,
+                            settings:@{kOSSettingsKeyAutoPrompt: @true,
                                        kOSSettingsKeyInAppLaunchURL: @true}];
     
 //    [OneSignal setLocationShared:false];
