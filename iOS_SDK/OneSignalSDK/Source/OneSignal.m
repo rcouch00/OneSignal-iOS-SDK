@@ -2159,7 +2159,7 @@ static NSString *_lastnonActiveMessageId;
     // Method was called due to a tap on a notification - Fire open notification
     else if (application.applicationState == UIApplicationStateActive) {
         [OneSignalHelper lastMessageReceived:userInfo];
-        
+
         if (![OneSignalHelper isRemoteSilentNotification:userInfo]) {
              [OneSignal notificationReceived:userInfo foreground:YES isActive:NO wasOpened:YES];
         }
