@@ -69,15 +69,15 @@
 }
 
 - (void)displaySettingsNotification {
-    UIAlertAction *settings = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"Tapped Settings");
-        if ([[[UIDevice currentDevice] systemVersion] compare:@"10.0" options:NSNumericSearch] != NSOrderedAscending) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
-        }
-    }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    
-    [self displayAlert:@"Settings" withMessage:@"Please turn on notifications by going to Settings > Notifications > Allow Notifications" actions:@[settings, cancel]];
+//    UIAlertAction *settings = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        NSLog(@"Tapped Settings");
+//        if ([[[UIDevice currentDevice] systemVersion] compare:@"10.0" options:NSNumericSearch] != NSOrderedAscending) {
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+//        }
+//    }];
+//    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+//
+//    [self displayAlert:@"Settings" withMessage:@"Please turn on notifications by going to Settings > Notifications > Allow Notifications" actions:@[settings, cancel]];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -89,17 +89,17 @@
 }
 
 - (void)displayAlert:(NSString *)title withMessage:(NSString *)message actions:(NSArray<UIAlertAction *>*)actions {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-        if (!actions || actions.count == 0) {
-            [controller addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:nil]];
-        } else {
-            for (UIAlertAction *action in actions) {
-                [controller addAction:action];
-            }
-        }
-        [self presentViewController:controller animated:true completion:nil];
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        UIAlertController *controller = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+//        if (!actions || actions.count == 0) {
+//            [controller addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:nil]];
+//        } else {
+//            for (UIAlertAction *action in actions) {
+//                [controller addAction:action];
+//            }
+//        }
+//        [self presentViewController:controller animated:true completion:nil];
+//    });
 }
 
 - (void)changeLoadingButtonAnimationStateWithTrailingConstraint:(NSLayoutConstraint *)constraint withActivityIndicatorView:(UIActivityIndicatorView *)activityIndicatorView animatingState:(BOOL)isAnimating {
@@ -150,21 +150,16 @@
 }
 
 - (IBAction)getIdsAvailableButtonPressed:(UIButton *)sender {
-    [OneSignal IdsAvailable:^(NSString* userId, NSString* pushToken) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (pushToken)
-            self.textView.text = [NSString stringWithFormat:@"PlayerId:\n%@\n\nPushToken:\n%@\n", userId, pushToken];
-            else
-            self.textView.text = @"ERROR: Could not get a pushToken from Apple! Make sure your provisioning profile has 'Push Notifications' enabled and rebuild your app.";
-            
-            NSLog(@"\n%@", self.textMultiLine1.text);
-        });
-    }];
-}
-
-- (IBAction)syncEmailButtonPressed:(UIButton *)sender {
-    [OneSignal syncHashedEmail:@"test@email.com"];
-    NSLog(@"Sync hashed email successful");
+//    [OneSignal IdsAvailable:^(NSString* userId, NSString* pushToken) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (pushToken)
+//            self.textView.text = [NSString stringWithFormat:@"PlayerId:\n%@\n\nPushToken:\n%@\n", userId, pushToken];
+//            else
+//            self.textView.text = @"ERROR: Could not get a pushToken from Apple! Make sure your provisioning profile has 'Push Notifications' enabled and rebuild your app.";
+//
+//            NSLog(@"\n%@", self.textMultiLine1.text);
+//        });
+//    }];
 }
 
 - (IBAction)promptLocationButtonPressed:(UIButton *)sender {
