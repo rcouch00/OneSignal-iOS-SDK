@@ -47,7 +47,7 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
         super.viewDidLoad()
         
         let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
-        let isSubscribed = status.subscriptionStatus.subscribed
+        let isSubscribed = status.subscriptionStatus?.subscribed
         
         if isSubscribed == true {
             allowNotificationsSwitch.isOn = true
@@ -66,7 +66,7 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
         let message = NSLocalizedString("Please turn on notifications by going to Settings > Notifications > Allow Notifications", comment: "Alert message when the user has denied access to the notifications")
         let settingsAction = UIAlertAction(title: NSLocalizedString("Settings", comment: "Alert button to open Settings"), style: .`default`, handler: { action in
             if #available(iOS 10.0, *) {
-                UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
             } else {
                 // Fallback on earlier versions
             }
@@ -100,7 +100,7 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
         self.present(controller, animated: true, completion: nil);
     }
     
-    func onOSPermissionChanged(_ stateChanges: OSPermissionStateChanges!) {
+    func onOSPermissionChanged(_ stateChanges: OSPermissionStateChanges) {
         if stateChanges.from.status == OSNotificationPermission.notDetermined {
             if stateChanges.to.status == OSNotificationPermission.authorized {
                 registerForPushNotificationsButton.backgroundColor = UIColor.green
@@ -115,7 +115,7 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
         }
     }
     
-    func onOSSubscriptionChanged(_ stateChanges: OSSubscriptionStateChanges!) {
+    func onOSSubscriptionChanged(_ stateChanges: OSSubscriptionStateChanges) {
         if stateChanges.from.subscribed && !stateChanges.to.subscribed { // NOT SUBSCRIBED != DENIED
             allowNotificationsSwitch.isOn = false
             setSubscriptionLabel.text = "Set Subscription OFF"
@@ -129,7 +129,7 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
         }
     }
     
-    func onOSEmailSubscriptionChanged(_ stateChanges: OSEmailSubscriptionStateChanges!) {
+    func onOSEmailSubscriptionChanged(_ stateChanges: OSEmailSubscriptionStateChanges) {
         self.textView.text = String(data: try! JSONSerialization.data(withJSONObject: stateChanges.toDictionary(), options: .prettyPrinted), encoding: .utf8);
     }
     
@@ -141,7 +141,7 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
     
     @IBAction func onRegisterForPushNotificationsButton(_ sender: UIButton) {
         let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
-        let hasPrompted = status.permissionStatus.hasPrompted
+        let hasPrompted = status.permissionStatus?.hasPrompted
         if hasPrompted == false {
             // Call when you want to prompt the user to accept push notifications.
             // Only call once and only if you set kOSSettingsKeyAutoPrompt in AppDelegate to false.
@@ -208,25 +208,18 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
     @IBAction func onGetIDsButton(_ sender: UIButton) {
         //getPermissionSubscriptionState
         let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
-        let hasPrompted = status.permissionStatus.hasPrompted
-        print("hasPrompted = \(hasPrompted)")
-        let userStatus = status.permissionStatus.status
-        print("userStatus = \(userStatus)")
-        let isSubscribed = status.subscriptionStatus.subscribed
-        print("isSubscribed = \(isSubscribed)")
-        let userSubscriptionSetting = status.subscriptionStatus.userSubscriptionSetting
-        print("userSubscriptionSetting = \(userSubscriptionSetting)")
-        let userID = status.subscriptionStatus.userId
+        let hasPrompted = status.permissionStatus?.hasPrompted
+        print("hasPrompted = \(String(describing: hasPrompted))")
+        let userStatus = status.permissionStatus?.status
+        print("userStatus = \(String(describing: userStatus))")
+        let isSubscribed = status.subscriptionStatus?.subscribed
+        print("isSubscribed = \(String(describing: isSubscribed))")
+        let userSubscriptionSetting = status.subscriptionStatus?.userSubscriptionSetting
+        print("userSubscriptionSetting = \(String(describing: userSubscriptionSetting))")
+        let userID = status.subscriptionStatus?.userId
         print("userID = \(userID ?? "None")")
-        let pushToken = status.subscriptionStatus.pushToken
+        let pushToken = status.subscriptionStatus?.pushToken
         print("pushToken = \(pushToken ?? "None")")
-    }
-    
-    @IBAction func onSyncEmailButton(_ sender: UIButton) {
-        // Optional method that sends us the user's email as an anonymized hash so that we can better target and personalize notifications sent to that user across their devices.
-        let testEmail = "test@test.test"
-        OneSignal.syncHashedEmail(testEmail)
-        print("sync hashedEmail successful")
     }
     
     @IBAction func onPromptLocationButton(_ sender: UIButton) {
@@ -248,8 +241,8 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
         // See the Create notification REST API POST call for a list of all possible options: https://documentation.onesignal.com/reference#create-notification
         // NOTE: You can only use include_player_ids as a targeting parameter from your app. Other target options such as tags and included_segments require your OneSignal App REST API key which can only be used from your server.
         let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
-        let pushToken = status.subscriptionStatus.pushToken
-        let userId = status.subscriptionStatus.userId
+        let pushToken = status.subscriptionStatus?.pushToken
+        let userId = status.subscriptionStatus?.userId
         
         if pushToken != nil {
             let message = "This is a notification's message or body"
@@ -273,8 +266,8 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
     
     @IBAction func onSendNotificationButton2(_ sender: UIButton) {
         let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
-        let pushToken = status.subscriptionStatus.pushToken
-        let userId = status.subscriptionStatus.userId
+        let pushToken = status.subscriptionStatus?.pushToken
+        let userId = status.subscriptionStatus?.userId
         
         if pushToken != nil {
             let notifiation2Content: [AnyHashable : Any] = [
