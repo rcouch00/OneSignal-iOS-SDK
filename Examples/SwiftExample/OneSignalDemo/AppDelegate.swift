@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSS
 
         let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false, kOSSettingsKeyInAppLaunchURL: true, ]
         
-        OneSignal.initWithLaunchOptions(launchOptions, appId: "3beb3078-e0f1-4629-af17-fde833b9f716", handleNotificationReceived: notificationReceivedBlock, handleNotificationAction: notificationOpenedBlock, settings: onesignalInitSettings)
+        OneSignal.initWithLaunchOptions(launchOptions, appId: "8f8ae230-9e27-4919-9404-b3281f1f424f", handleNotificationReceived: notificationReceivedBlock, handleNotificationAction: notificationOpenedBlock, settings: onesignalInitSettings)
         
         OneSignal.inFocusDisplayType = OSNotificationDisplayType.notification
         
