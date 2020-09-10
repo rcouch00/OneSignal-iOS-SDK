@@ -130,7 +130,7 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
     }
     
     func onOSEmailSubscriptionChanged(_ stateChanges: OSEmailSubscriptionStateChanges!) {
-        self.textView.text = String(data: try! JSONSerialization.data(withJSONObject: stateChanges.toDictionary(), options: .prettyPrinted), encoding: .utf8);
+        self.textView.text = String(data: try! JSONSerialization.data(withJSONObject: stateChanges.toDictionary() as Any, options: .prettyPrinted), encoding: .utf8);
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -221,14 +221,14 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
         let pushToken = status.subscriptionStatus.pushToken
         print("pushToken = \(pushToken ?? "None")")
     }
-    
+    /*
     @IBAction func onSyncEmailButton(_ sender: UIButton) {
         // Optional method that sends us the user's email as an anonymized hash so that we can better target and personalize notifications sent to that user across their devices.
         let testEmail = "test@test.test"
         OneSignal.syncHashedEmail(testEmail)
         print("sync hashedEmail successful")
     }
-    
+    */
     @IBAction func onPromptLocationButton(_ sender: UIButton) {
         // promptLocation method
         // Prompts the user for location permissions to allow geotagging from the OneSignal dashboard. This lets you send notifications based on the device's location.
