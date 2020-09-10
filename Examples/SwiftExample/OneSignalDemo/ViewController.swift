@@ -225,7 +225,7 @@ class ViewController: UIViewController, OSPermissionObserver, OSSubscriptionObse
     @IBAction func onSyncEmailButton(_ sender: UIButton) {
         // Optional method that sends us the user's email as an anonymized hash so that we can better target and personalize notifications sent to that user across their devices.
         let testEmail = "test@test.test"
-        OneSignal.syncHashedEmail(testEmail)
+        //OneSignal.syncHashedEmail(testEmail)
         print("sync hashedEmail successful")
     }
     */
